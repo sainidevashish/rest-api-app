@@ -11,7 +11,7 @@ const register = async function (req, res, next) {
     cpassword : Joi.ref('password')
   });
 
-  const error = registerSchema.validate(req.body);
+  const {error} = registerSchema.validate(req.body);
 
   if (error){
     console.log(error);
