@@ -3,18 +3,12 @@ const mongoose = require("mongoose");
 const app = express();
 require("./connection");
 const User = require("./model/user");
-app.use(express.json());
+const routes = require("./routes");
+app.use('/api',routes);
+const {PORT} = require('./config');
+const errorHandler = require("./middlewares/errorHandler");
 
-app.post("/", async (req, res) => {
-  const { password, cpassword } = req.body;
-  if (password == cpassword) {
-    const result = await User.create(res.body);
-    res.status(201).json({"msg":"user created !",result});
-  } else {
-    res.status(400).json({"msg":"password does not matched !"});
-  }
-});
-
-app.listen(5000, () => {
-  console.log(`server is running on 5000 port`);
+app.use(errorHandler);
+app.listen(PORT, () => {
+  console.log(`server is running on ${PORT} port`);
 })

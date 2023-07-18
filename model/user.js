@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+
 const userSchema = new mongoose.Schema({
     userName : {
         type : String,
-        required : true,
-        unique : true
+        required :  true
     },
     password : {
         type : String,
@@ -11,9 +11,11 @@ const userSchema = new mongoose.Schema({
     },
     emailId : {
         type : String,
-        required : true,
+        required : true
     }
 });
 
+
 const User = new mongoose.model('user_deva',userSchema);
+
 module.exports = User;
