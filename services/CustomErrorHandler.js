@@ -13,5 +13,9 @@ class CustomErrorHandler extends Error {
     return new CustomErrorHandler(401,message);
   }
 
+  static unauthorized (message = 'unauthorized'){
+    return new CustomErrorHandler(401,message);
+  }
+
 }
 module.exports = CustomErrorHandler;

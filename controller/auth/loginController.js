@@ -23,13 +23,13 @@ const login = async function (req, res, next) {
   //   console.log(req.body);
   try {
     const user = await User.findOne({ emailId: emailId });
-    console.log(user);
+    // console.log(user);
     if (!user) {
       return next(CustomErrorHandler.wrongCredential());
     }
     //compare the password
     const match = await bcrypt.compare(password, user.password);
-    console.log(match);
+    // console.log(match);
     if (!match) {
       return next(CustomErrorHandler.wrongCredential());
     }

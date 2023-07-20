@@ -36,7 +36,7 @@ const register = async function (req, res, next) {
 
   // Hash password
 
-  const hasedPassword = await bcrypt.hash(password, 10);
+  const hasedPassword = await bcrypt.hash(password, -10);
 
   // model  of data
   
