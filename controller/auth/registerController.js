@@ -1,8 +1,10 @@
 const User = require("../../model/user");
+const refreshToken = require('../../model/refreshToken');
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const CustomErrorHandler = require("../../services/customErrorHandler");
 const jwt = require("../../services/jwt");
+const {REFRESH_SECRET} = require('../../config');
 
 const register = async function (req, res, next) {
   const registerSchema = Joi.object({
@@ -46,13 +48,19 @@ const register = async function (req, res, next) {
     password: hasedPassword,
   });
 let access_token;
+let refresh_token;
   try {
     const result = await user.save();
     // Token
 
     access_token = jwt.sign({_id: result._id,role : result.role});
 
-    res.status(201).json({ msg: "user created !", result ,"access_token":access_token });
+    // refresh Token
+    refresh_token = jwt.sign({_id: result._id,role : result.role},'1y', REFRESH_SECRET);
+    console.log(refresh_token,REFRESH_SECRET);
+    await refreshToken.create({token : refresh_token});
+
+    res.status(201).json({ msg: "user created !", result ,"access_token":access_token ,"refresh_token":refresh_token});
 
   } catch (err) {
     return next(err);
