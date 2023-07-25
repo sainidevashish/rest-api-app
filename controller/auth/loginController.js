@@ -3,6 +3,8 @@ const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("../../services/jwt");
 const CustomErrorHandler = require("../../services/customErrorHandler");
+const { REFRESH_SECRET } = require("../../config");
+const refreshToken = require('../../model/refreshToken');
 
 // validate user
 const login = async function (req, res, next) {
@@ -36,7 +38,11 @@ const login = async function (req, res, next) {
     // Token
     const access_token = jwt.sign({ _id: user._id, role: user.role });
 
-    res.json({access_token:access_token, "msg": "login successfully !"});
+    const refresh_token = jwt.sign({ _id: user._id, role: user.role }, '1y', REFRESH_SECRET);
+
+    await refreshToken.create({token : refresh_token});
+
+    res.json({access_token,refresh_token, "msg": "login successfully !"});
   } catch (err) {
     return next(err);
   }
