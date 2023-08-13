@@ -6,7 +6,7 @@ const CustomErrorHandler = require("../../services/customErrorHandler");
 const jwt = require("../../services/jwt");
 const {REFRESH_SECRET} = require('../../config');
 
-const register = async function (req, res, next) {
+const register = async (req, res, next) => {
   const registerSchema = Joi.object({
     userName: Joi.string().min(3).max(15).required(),
     password: Joi.string()
@@ -57,7 +57,7 @@ let refresh_token;
 
     // refresh Token
     refresh_token = jwt.sign({_id: result._id,role : result.role},'1y', REFRESH_SECRET);
-    console.log(refresh_token,REFRESH_SECRET);
+    // console.log(refresh_token,REFRESH_SECRET);
     await refreshToken.create({token : refresh_token});
 
     res.status(201).json({ msg: "user created !", result ,"access_token":access_token ,"refresh_token":refresh_token});

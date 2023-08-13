@@ -7,7 +7,7 @@ const { REFRESH_SECRET } = require("../../config");
 const refreshToken = require('../../model/refreshToken');
 
 // validate user
-const login = async function (req, res, next) {
+const login = async  (req, res, next) => {
   const { emailId, password } = req.body;
   const loginSchema = Joi.object({
     password: Joi.string()
@@ -37,7 +37,7 @@ const login = async function (req, res, next) {
     }
     // Token
     const access_token = jwt.sign({ _id: user._id, role: user.role });
-
+  
     const refresh_token = jwt.sign({ _id: user._id, role: user.role }, '1y', REFRESH_SECRET);
 
     await refreshToken.create({token : refresh_token});

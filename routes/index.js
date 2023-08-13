@@ -10,4 +10,6 @@ router.get('/me',auth,controller.userController);
 router.post('/refresh',controller.refreshController);
 router.post('/logout',auth,controller.logoutController);
 
+// router.post('/products',controller.store);
+
 module.exports = router;

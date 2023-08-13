@@ -17,5 +17,9 @@ class CustomErrorHandler extends Error {
     return new CustomErrorHandler(401,message);
   }
 
+  static serverError (message = 'serverError'){
+    return new CustomErrorHandler(500,message);
+  }
+
 }
 module.exports = CustomErrorHandler;
